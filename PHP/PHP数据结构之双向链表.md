@@ -30,7 +30,7 @@
 可以看到这个类实现了Iterator，arrayAccess等接口，就意味着可以像数组一样访问这个对象，有push,pop,shift,unshift,current等方法。
 
 举个例子：
-```
+```php
 <?php
 $dll = new SplDoublyLinkedList();
 $dll->add(0, 'a');
