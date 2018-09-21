@@ -9,8 +9,15 @@
 
 ![](http://ww1.sinaimg.cn/large/5f6e3e27ly1fvg1zeac9nj20oa0a6tb6.jpg)
 
-建议大家找一找相关教程仔细看看，这里只贴了一个PHP实现的代码：
+下面看一下图：
 
+![](http://ww1.sinaimg.cn/large/5f6e3e27ly1fvgyvvo4xyj20lf09040f.jpg)
+![](http://ww1.sinaimg.cn/large/5f6e3e27ly1fvgyw55iwlj20ji091gn6.jpg)
+![](http://ww1.sinaimg.cn/large/5f6e3e27ly1fvgyw56ua0j20ob0giq78.jpg)
+![](http://ww1.sinaimg.cn/large/5f6e3e27ly1fvgyw57cblj20pn0jv0x8.jpg)
+![](http://ww1.sinaimg.cn/large/5f6e3e27ly1fvgyw562xgj20o00hcn1w.jpg)
+
+最后贴一个PHP实现的代码：
 #### 树节点类:
 ```php
 class Node
