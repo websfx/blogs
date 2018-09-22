@@ -7,7 +7,7 @@
 sudo apt-get install privoxy
 ```
 
-3.修改provoxy配置
+3.修改privoxy配置
 ```
 sudo vim /etc/privoxy/config
 ```
