@@ -19,7 +19,7 @@ awk '{print $1}' access.log | sort -n |uniq -c |awk '{if($1 >100) print $0}'|sor
 ```
 5. 查询某个IP的详细访问情况,按访问频率排序
 ```
-grep '127.0.01' access.log |awk '{print $7}'|sort |uniq -c |sort -rn |head -n 100
+grep '127.0.0.1' access.log |awk '{print $7}'|sort |uniq -c |sort -rn |head -n 100
 ```
 6. 查看访问最频的页面(TOP100)
 ```

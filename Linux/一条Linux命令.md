@@ -5,6 +5,8 @@ ps -ef|grep nginx|awk '{print $2}'|xargs sudo kill -9
 ```
 上面这条命令使用了管道组合了多个命令，作用是找个所有进程名字包含 **nginx** 的进程，然后 kill 这些进程。
 
+---
+
 ###1.首先是ps这个命令，简单的说是查看当前系统进程。
 ```shell
 Usage: ps [OPTION]
@@ -13,7 +15,7 @@ Usage: ps [OPTION]
 但是好在平时我们只用到其中几个参数就够用了。所以这里我也只是简单说下常用参数和常见应用场景，详细命令可以man或者help。
 
 对于ps这个命令，按照手册的说法，它有不同的风格，有适合UNIX，有适合BSD，一般来说，**ps -axu** 和 **ps -ef** 效果是一样的。
-所以 ```ps -ef```的结果是：
+其结果如下：
 ```bash
 UID        PID  PPID  C STIME TTY          TIME CMD
 root         1     0  0 10:12 ?        00:00:02 /sbin/init splash
@@ -39,7 +41,7 @@ root        23     2  0 10:12 ?        00:00:00 [idle_inject/2]
 .......
 .......
 ```
-
+---
 
 ###2.grep命令
 ```shell
@@ -100,10 +102,12 @@ www-data 26650 26642  0 17:36 ?        00:00:00 nginx: worker process
 jwang    28782 18097  0 18:31 pts/20   00:00:00 grep --color=auto nginx
 ```
 
+---
+
 ###3.awk命令
 >Awk是一种便于使用且表达能力强的程序设计语言，可应用于各种计算和数据处理任务。
 
-看这介绍就知道awk多强大，都上升到语言的层次，还是从简单的开始说吧！先说说一开始的命令里面用法: ```awk '{print $2}'```
+看这介绍就知道awk多强大，都上升到语言的层次，先说说一开始的命令里面用法: ```awk '{print $2}'```
 
 默认情况下，awk使用 **空格** 去分割字符串，把上面的结果每一行按照空格去分割成N块，其中$0代表字符串本身，$1代表第一个块，$2代表第二个块，以此类推....
 
@@ -120,35 +124,81 @@ jwang    28782 18097  0 18:31 pts/20   00:00:00 grep --color=auto nginx
 26650
 28836
 ```
-
-简单说说awk其它用法:
-
-1.举个例子，有这个一个文件data.txt内容如下：
-```bash
-Beth	4.00	0
-Dan	3.75	0
-kathy	4.00	10
-Mark	5.00	20
-Mary	5.50	22
-Susie	4.25	18
-```
-你需要计算第2列和第3列的乘积，可以这样 ```awk '{print $1, $2 * $3}' data.txt```：
-```bash
-Beth 0
-Dan 0
-kathy 40
-Mark 100
-Mary 121
-Susie 76.5
+awk常用参数：
+```shell
+1. -F fs or --field-separator fs 指定输入文件折分隔符，fs是一个字符串或者是一个正则表达式
+2. -v var=value or --asign var=value 赋值一个用户定义变量。
+3. -f scripfile or --file scriptfile 从脚本文件中读取awk命令。
 ```
 
-2.查出nginx日志里面状态为500的请求:
+关于awk脚本，我们需要注意两个关键词BEGIN和END。
+
+BEGIN{ 这里面放的是执行前的语句 }
+
+END {这里面放的是处理完所有的行后要执行的语句 }
+
+{这里面放的是处理每一行时要执行的语句}
+
+>假设有这么一个文件（学生成绩表）：
+```
+$ cat score.txt
+Marry   2143 78 84 77
+Jack    2321 66 78 45
+Tom     2122 48 77 71
+Mike    2537 87 97 95
+Bob     2415 40 57 62
+```
+我们的awk脚本如下：
+```bash
+$ cat cal.awk
+#!/bin/awk -f
+#运行前
+BEGIN {
+    math = 0
+    english = 0
+    computer = 0
+ 
+    printf "NAME    NO.   MATH  ENGLISH  COMPUTER   TOTAL\n"
+    printf "---------------------------------------------\n"
+}
+#运行中
+{
+    math+=$3
+    english+=$4
+    computer+=$5
+    printf "%-6s %-6s %4d %8d %8d %8d\n", $1, $2, $3,$4,$5, $3+$4+$5
+}
+#运行后
+END {
+    printf "---------------------------------------------\n"
+    printf "  TOTAL:%10d %8d %8d \n", math, english, computer
+    printf "AVERAGE:%10.2f %8.2f %8.2f\n", math/NR, english/NR, computer/NR
+}
+```
+我们来看一下执行结果：
+```
+$ awk -f cal.awk score.txt
+NAME    NO.   MATH  ENGLISH  COMPUTER   TOTAL
+---------------------------------------------
+Marry  2143     78       84       77      239
+Jack   2321     66       78       45      189
+Tom    2122     48       77       71      196
+Mike   2537     87       97       95      279
+Bob    2415     40       57       62      159
+---------------------------------------------
+  TOTAL:       319      393      350
+AVERAGE:     63.80    78.60    70.00
+```
+
+>再看一个案例，查出nginx日志里面状态为500的请求:
 
 ```
 awk '$9 == 500 {print $0}' /var/log/nginx/access.log
 ```
 
 awk还支持常见的if while等逻辑控制语句。
+
+---
 
 ###4.xargs命令
 ```bash
@@ -197,5 +247,6 @@ lrwxrwxrwx 1 root root   33 7月  12  2017 changelog.Debian.gz -> ../nginx-core/
 total 4
 drwxr-xr-x 2 root root 4096 5月   6  2018 html
 ```
+所以，最后的xargs命令是把前面筛选得到的pid作为参数传给命令kill执行，有时候会有权限问题，所以这里加了个sudo。
 
 
