@@ -7,7 +7,7 @@ ps -ef|grep nginx|awk '{print $2}'|xargs sudo kill -9
 
 ---
 
-###1.首先是ps这个命令，简单的说是查看当前系统进程。
+### 1.首先是ps这个命令，简单的说是查看当前系统进程。
 ```shell
 Usage: ps [OPTION]
 ```
@@ -43,7 +43,7 @@ root        23     2  0 10:12 ?        00:00:00 [idle_inject/2]
 ```
 ---
 
-###2.grep命令
+### 2.grep命令
 ```shell
 Usage: grep [OPTION]... PATTERN [FILE]...
 ```
@@ -104,7 +104,7 @@ jwang    28782 18097  0 18:31 pts/20   00:00:00 grep --color=auto nginx
 
 ---
 
-###3.awk命令
+### 3.awk命令
 >Awk是一种便于使用且表达能力强的程序设计语言，可应用于各种计算和数据处理任务。
 
 看这介绍就知道awk多强大，都上升到语言的层次，先说说一开始的命令里面用法: ```awk '{print $2}'```
@@ -200,7 +200,7 @@ awk还支持常见的if while等逻辑控制语句。
 
 ---
 
-###4.xargs命令
+### 4.xargs命令
 ```bash
 Usage: xargs [OPTION]... COMMAND [INITIAL-ARGS]...
 ```
