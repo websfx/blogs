@@ -216,16 +216,35 @@ var_dump($product);
 $product->setName("ORM更新数据");
 $entityManager->flush();
 ```
-我们只需调用这个对象的setter方法，然后flush即可，也是OOP的操作方式！
+我们只需调用这个对象的setter方法，然后flush即可！
 
 #### 七.表与表之间的关系
 
 数据表和数据表之间的关系总体来说可以分为下面几种：1对1，1对多，多对多，在doctrine里面有细分为下面几种：
+
 ![](http://ww1.sinaimg.cn/large/5f6e3e27ly1fx6n9nprvzj208n09raab.jpg)
 
 划分的有点复杂和难理解，这里我就简单介绍其中一种：oneToMany，即1对多关系，这个其实很常见，比如说一个产品可以有多个评论。
 
-首先，先定义一下评论表comment, 基本上和product差不多：
+从面向对象的思维来说，2个表之间的关系就是2个对象之间的关系，所谓1对多，其实1个对象包含（hasMany）多个其它对象, 在实际数据表设计，为了表达这种关系，也有好几种设计方式：
+
+第一种: 在 product 表新增一个字段 comment_ids，用于存放所有评论ID，这种方式查询评论的时候简单，但是一旦要修改数据就头疼了，很少使用。
+
+第二种: 在 comment 表新增一个product_id，用于表明当前评论所属的product，查询的时候稍微复杂点，但是便于修改数据。
+
+第三种: 新建一个中间表，用来维护2个表之间的关系，中间表一般用来维护多对多的关系，但是也可以用于1对多的关系，这时候查询和修改都比较复杂，好处就是很容易扩展成多对多关系！
+
+实际开发中，大部分时候都是使用第二种方式来表示1对多的关系。在doctrine里面，对于1对多，有3种形式：
+
+1.双向（bidirectional），这个其实就是对应上面第二种的方式
+
+2.单向结合中间表（Unidirectional with Join Table），这个就是对应上面所说的第三种的方式
+
+3.自引用（Self-referencing)，这个所谓的自引用，其实就是指类似在无限级分类表设计，那种有一个parent_id字段指向表本身的记录！
+
+这里我就演示一下第二种方式，通过在 comment 表新建 product_id 字段这种方式。
+
+首先，先定义一下评论实体comment, 基本结构和product差不多：
 ```php
 <?php
 namespace App;
@@ -236,6 +255,14 @@ namespace App;
  */
 class Comment
 {
+    /**
+     * 这里通过注释设置了需要映射的实体和对应的字段
+     * @ManyToOne(targetEntity="Product", inversedBy="comments")
+     * @JoinColumn(name="product_id", referenceColumnName="id")
+     * @var Product
+     */
+    protected $product;
+    
     /**
      * @ID @Column(type="integer") @GenerateDValue
      * @var int
@@ -252,9 +279,24 @@ class Comment
 }
 ``` 
 
-接下来，我们就需要对product 和 comment 做一些改动，建立关联关系！
+接下来，我们就需要对 product 实体做一些改动，加入了一个comments属性和一些注解！
 
-
+```php
+<?php
+    /**
+     * @oneToMany(targetEntity="Comment", mappedBy="product")
+     * @var
+     */
+    protected $comments;
+    
+    public function __construct()
+    {
+        $this->comments = new ArrayCollection();
+    }
+    
+    ....more code
+```
+执行 ```vendor/bin/doctrine orm:schema-tool:update --force --dump-sql```更新数据库, 执行之后你会发现comments表会多一个product_id字段, 同时还会多出一个外键索引！
 
 
 

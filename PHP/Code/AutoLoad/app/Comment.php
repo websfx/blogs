@@ -8,6 +8,15 @@ namespace App;
  */
 class Comment
 {
+
+    /**
+     * 这里通过注释设置了需要映射的实体和对应的字段
+     * @ManyToOne(targetEntity="Product", inversedBy="comments")
+     * @JoinColumn(name="product_id", referencedColumnName="id")
+     * @var Product
+     */
+    protected $product;
+
     /**
      * @ID @Column(type="integer") @GenerateDValue
      * @var int

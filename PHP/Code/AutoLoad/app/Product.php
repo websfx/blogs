@@ -1,6 +1,8 @@
 <?php
 namespace App;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * @Entity @Table(name="products",options={"collate"="utf8mb4_unicode_ci", "charset"="utf8mb4"})
  * Class Product
@@ -8,12 +10,32 @@ namespace App;
  */
 class Product
 {
-
     /**
-     * @oneToMany(targetEntity="Comment")
+     * @oneToMany(targetEntity="Comment", mappedBy="product")
      * @var
      */
     protected $comments;
+
+    /**
+     * @return mixed
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    /**
+     * @param mixed $comments
+     */
+    public function setComments(Comment $comments): void
+    {
+        $this->comments = $comments;
+    }
+
+    public function __construct()
+    {
+        $this->comments = new ArrayCollection();
+    }
 
     /**
      * @ID @Column(type="integer") @GenerateDValue
