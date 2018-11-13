@@ -1,9 +1,9 @@
 ### 1.什么是ORM？
 >对象关系映射（Object Relational Mapping，简称ORM）模式是一种为了解决面向对象与关系数据库存在的互不匹配的现象的技术。简单的说，ORM是通过使用描述对象和数据库之间映射的元数据，将程序中的对象自动持久化到关系数据库中。
 
-ORM并不是PHP独有的东西，只要和数据库打交道的语言都可以使用ORM，常见的ORM有: 比如Java Web三大框架里面Hibernate，还有Doctrine(PHP重量级的ORM) ，Eloquent（laravel框架默认ORM，也可以单独使用）。
+ORM并不是PHP独有的东西，只要和数据库打交道的语言都可以使用ORM，比如Java Web三大框架里面Hibernate，还有Doctrine(PHP重量级的ORM) ，Eloquent（laravel框架默认ORM，也可以单独使用）。
 
-ORM是完全采用面向对象的思想去操作数据库，不用去拼SQL，对于复杂的SQL，ORM也支持直接运行原生SQL，使用ORM的利弊咱放到后面说，咱先回顾一下平时咱们都是怎么操作数据库？举个例子，现在有一个库blog，一张表article，大部分的时候都是这是方式：新建MySQL连接，然后执行数据库操作，需要手写SQL：
+ORM是完全采用面向对象的方式去操作数据库，不用去拼SQL，对于复杂的SQL，ORM也支持直接运行原生SQL，咱先回顾一下平时咱们都是怎么操作数据库？举个例子，现在有一个库blog，一张表article，大部分的时候都是这是方式：新建MySQL连接，然后执行数据库操作，需要手写SQL：
 ```php
 <?php
 $connect = mysqli_connect("localhost", "root", "123456", "blog", "3306") or die("数据库连接失败！");
@@ -19,7 +19,7 @@ if (!$query) {
 $assoc = $query->fetch_assoc();
 var_dump($assoc);
 ```
-当然上面的写法也有缺点，有一种更好的方式是使用PDO，扩展性更强，而且可以使用预处理防止SQL注入:
+上面的写法有一些缺点，有一种更好的方式是使用PDO，扩展性更强，而且可以使用预处理防止SQL注入:
 ```php
 <?php
 try {
@@ -56,14 +56,14 @@ $orders = DB::table('orders')
                 ->havingRaw('SUM(price) > 2500')
                 ->get();
 ```
-这些类和方法节省了开发中查库的操作时间，但本质上还是拼SQL，只不过调用的时候看起来更面向对象，已经非常方便了，但是ORM的功能还要比这个多一点，能够方便的处理表与表的之间的关系。
+这些类和方法大大简化了查询操作，但本质上还是拼SQL，只不过调用的时候看起来更像面向对象，非常方便，但是ORM的功能还要比这个多一点，ORM还能够方便的处理表与表的之间的关系。
 
 ### 2.Doctrine
-Doctrine是symfony框架默认ORM，下面我就简单介绍一下PHP重量级ORM doctrine，官网连接: https://www.doctrine-project.org/ 
+Doctrine是symfony框架默认ORM，下面我就简单介绍一下，官网连接: https://www.doctrine-project.org/ 
 
-1.安装
+#### 一.安装
 
-一.按照官方的教程，最好的方式是使用composer:
+按照官方的教程，最好的方式是使用composer:
 ```json
 {
     "require": {
@@ -72,7 +72,7 @@ Doctrine是symfony框架默认ORM，下面我就简单介绍一下PHP重量级OR
     }
 }
 ```
-二.在项目根目录创建一个bootstrap.php文件：
+#### 二.在项目根目录创建一个bootstrap.php文件：
 
 ```php
 <?php
@@ -101,13 +101,13 @@ $conn = array(
 // obtaining the entity manager
 $entityManager = EntityManager::create($conn, $config);
 ```
-这里面有一些需要注意的地方，$idDevMode 配置是否开发模式.
+这里面有一些需要注意的地方，$idDevMode是配置是否开发模式.
 
-$config按照官方说法现在推荐使用 Annotation 也就说注解的方式配置，还支持xml和yaml，yaml这种方式已经被deprecated了，还有需要把src替换成你自己项目的目录，在本例中，是app。
+$config按照官方说法现在推荐使用 Annotation 也就说注解的方式配置，还支持xml和yaml，但是yaml这种方式已经被deprecated了，还有需要把src替换成你自己项目的目录，在本例中，是app。
 
-下面还有数据库连接配置，官方给的案例是使用了sqlite了，这里改成了MySQL。
+下面还有数据库连接配置，官方给的案例是使用了sqlite，这里我改成了MySQL。
 
-三.配置命令行工具
+#### 三.配置命令行工具
 
 同样在项目根目录新建一个 cli-config.php 文件：
 ```php
@@ -119,9 +119,9 @@ return \Doctrine\ORM\Tools\Console\ConsoleRunner::createHelperSet($entityManager
 ```
 这样就可以使用命令行工具执行一些操作，比如说生成数据表，更新数据表
 
-四.使用Annotation创建数据表
+#### 四.定义数据库实体，创建数据表
 
-先来一个简单的数据库实体，在app目录下创建一个 Product.php 文件，这个文件其实可以理解为是model，即数据库模型文件！内容如下：
+先来一个简单的，在app目录下创建一个 Product.php 文件，这个文件其实可以理解为是model，即数据库模型文件！内容如下：
 ```php
 <?php
 namespace App;
@@ -150,7 +150,7 @@ class Product
     ......more code
 }
 ```
-后面的setter和getter这里省略了，如果有人对 **annotation** 这种注解方法比较熟悉的话应该可以看懂。
+后面的setter和getter这里省略了，如果有人对 **annotation** 这种注解方法比较熟悉的话应该可以看懂上面那些注释的意思。
 
 首先在类的注释上，使用了@Entity表明这是一个数据库实体。@Table指定了表名，@ID表明的是主键，@Column表明是数据表字段，使用type声明了类型！
 
@@ -166,11 +166,11 @@ class Product
                                                                                                       
  [OK] Database schema updated successfully!  
 ```
-可以看到，使用这种方式，完全不用担心数据库问题，无论是mysql还是sql server，或者oracle，都没问题，一键迁移，ORM抹平了数据库之间的差异！
+使用这种方式建表不用去写SQL语句，无论是mysql还是sql server，或者oracle，都没问题，一键迁移，ORM抹平了数据库之间的差异！
 
-五.持久化数据到数据表
+#### 五.持久化数据到数据表
 
-上面的步骤搞定了数据库创建的问题，下面来介绍一下如何插入数据到数据表，为了方便，这里我直接写在index.php里面：
+上面的步骤搞定了数据表创建的问题，下面来介绍一下如何插入数据到数据表，为了方便，这里我直接写在index.php里面：
 ```php
 <?php
 require "vendor/autoload.php";
@@ -187,7 +187,7 @@ var_dump($product);
 ```
 可以看出来这是一个完全OOP的写法，是先实例化一个数据表实体，然后通过setter去设置去属性，最后调用persist和flush持久化数据库里面。
 
-六.查询数据
+#### 六.查询数据
 
 使用ORM查询数据也很简单,：
 ```php
@@ -218,7 +218,7 @@ $entityManager->flush();
 ```
 我们只需调用这个对象的setter方法，然后flush即可，也是OOP的操作方式！
 
-七.表与表之间的关系
+#### 七.表与表之间的关系
 
 数据表和数据表之间的关系总体来说可以分为下面几种：1对1，1对多，多对多，在doctrine里面有细分为下面几种：
 ![](http://ww1.sinaimg.cn/large/5f6e3e27ly1fx6n9nprvzj208n09raab.jpg)
