@@ -14,27 +14,16 @@ class Product
      * @oneToMany(targetEntity="Comment", mappedBy="product")
      * @var
      */
-    protected $comments;
-
-    /**
-     * @return mixed
-     */
-    public function getComments()
-    {
-        return $this->comments;
-    }
-
-    /**
-     * @param mixed $comments
-     */
-    public function setComments(Comment $comments): void
-    {
-        $this->comments = $comments;
-    }
+    private $comments;
 
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+    }
+
+    public function getComments()
+    {
+        return $this->comments;
     }
 
     /**

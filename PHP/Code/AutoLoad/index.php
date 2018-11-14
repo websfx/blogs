@@ -35,3 +35,9 @@ $product->setName("ORM更新数据");
 $entityManager->flush();
 
 var_dump($product);
+$id = 3;
+$product = $entityManager->find('\App\Product', 3);
+
+$comments = $product->getComments()->toArray();
+
+var_dump($comments);
