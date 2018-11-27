@@ -46,7 +46,7 @@ class PhoneLineAdapter extends AndroidLine implements AbstractIphone
     public function Icharge()
     {
         echo "转换一下\n"；
-        parent::charge();
+        parent::Acharge();
     }
 }
 ```
