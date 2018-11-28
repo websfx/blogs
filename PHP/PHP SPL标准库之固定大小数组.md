@@ -1,4 +1,4 @@
-###简介
+### 简介
 SplFixedArray，字面意思就是固定大小的数组，意思就是在定义的时候就要确定大小，有点C语言基础的人估计都知道在C语言里面数组的大小是固定的，而PHP则随意很多，代价就是性能，所以这个数组比那个性能高很多，这里有一组数据：
 > 
 On a PHP 5.4 64 bits linux server, I found SplFixedArray to be always faster than array().
@@ -10,7 +10,7 @@ On a PHP 5.4 64 bits linux server, I found SplFixedArray to be always faster tha
     * read:  SplFixedArray is 10 % faster
 
 
-###1.类摘要
+### 1.类摘要
 ```
 SplFixedArray implements Iterator , ArrayAccess , Countable {
 	/* 方法 */
@@ -32,7 +32,7 @@ SplFixedArray implements Iterator , ArrayAccess , Countable {
 	public void __wakeup ( void )
 }
 ```
-###2.实例
+### 2.实例
 ```
 <?php
 

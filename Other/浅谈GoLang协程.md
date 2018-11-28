@@ -1,4 +1,4 @@
-###GoLang协程
+### GoLang协程
 学习golang也有一段时间了，这里讲一下自己对golang协程的使用理解，golang很多人都知道，毕竟有个好爹Google，提起golang和其它语言最大区别莫过于goroutine，
 也就是go的协程，先来一个demo
 ```

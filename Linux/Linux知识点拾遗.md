@@ -1,4 +1,4 @@
-####记录一下平时遇到的比较少用难以记忆的一些Linux知识点
+### 记录一下平时遇到的比较少用难以记忆的一些Linux知识点
 1. 备份命令：
 ```
 tar cvpzf backup.tgz --exclude=/proc --exclude=/lost+found --exclude=/root/backup.tgz --exclude=/mnt --exclude=/sys --exclude=/media  / 

