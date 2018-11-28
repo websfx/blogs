@@ -1,8 +1,8 @@
-###简介
+### 简介
 堆（英语：heap)是计算机科学中一类特殊的数据结构的统称。堆通常是一个可以被看做一棵树的数组对象。堆总是满足下列性质：
 堆中某个节点的值总是不大于或不小于其父节点的值；堆总是一棵完全二叉树。
 将根节点最大的堆叫做最大堆或大根堆，根节点最小的堆叫做最小堆或小根堆。常见的堆有二叉堆、斐波那契堆等。（以上内容网上摘取，是不是看了之后一脸懵逼？还是看看代码吧）
-###1.类摘要
+### 1.类摘要
 ```
 abstract SplHeap implements Iterator , Countable {
 	/* 方法 */
@@ -23,7 +23,7 @@ abstract SplHeap implements Iterator , Countable {
 ```
 从这个类的定义可以看出来，这是一个抽象类，但是只有一个抽象实现需要方法compare，啥意思呢？文档的定义是： Compare elements in order to place them correctly in the heap while sifting up.翻译过来就是比较元素，在筛选时候正确的放置其位置，问题来了，和谁比呢？
 
-###2.实例
+### 2.实例
 ```
 <?php
 
