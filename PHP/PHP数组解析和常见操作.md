@@ -47,10 +47,12 @@ sort ( array &$array [, int $sort_flags = SORT_REGULAR ] ) : bool
 ```
 然后是一些以a、r、k、u组合的函数，不得不说这命名是真烂！
 
-a 是associate，意思是排序是保留索引关联，最常见的是 **asort**
-r 是reverse，意思是逆序排，最常见的就是 **rsort**
-k 是key，意思是按照数组的key进行排序，保留索引关联，主要是用于关联数组，最常见的就是 **ksort**
-u 是user，意思使用用户自定义函数的函数排序，最常见的就是 **usort**
+```
+a 是associate，意思是排序是保留索引关联，最常见的是 asort
+r 是reverse，意思是逆序排，最常见的就是 rsort
+k 是key，意思是按照数组的key进行排序，保留索引关联，主要是用于关联数组，最常见的就是 ksort
+u 是user，意思使用用户自定义函数的函数排序，最常见的就是 usort
+```
 
 好了，除了上面这4个之外，其它就是这几个字母的组合的函数了，比如 **arsort** 是保留索引倒序排序、**uksort** 使用用户自定义的比较函数对数组中的键名进行排序，其它我就不多说了。
 
@@ -71,6 +73,7 @@ array_reduce — 用回调函数迭代地将数组简化为单一的值
 array_replace_recursive — 使用传递的数组递归替换第一个数组的元素
 ```
 ##### 3.其它
+```
 array_flip — 交换数组中的键和值
 array_reverse — 返回单元顺序相反的数组
 array_column — 返回数组中指定的一列
@@ -98,6 +101,7 @@ in_array — 检查数组中是否存在某个值
 array_replace — 使用传递的数组替换第一个数组的元素
 array_slice — 从数组中取出一段
 array_splice — 去掉数组中的某一部分并用其它值取代
+```
 
 PHP自带的这些数组函数基本上你所想到的操作它都有，没有的也可以组合这些方法创造一个，我记得在laravel框架里面就自带了一个数组集合类，里面就有一些非常好用的方法。
 
