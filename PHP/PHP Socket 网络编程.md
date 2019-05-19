@@ -7,6 +7,7 @@
 Socket并不是一个协议，本质上说Socket是对 TCP/IP 协议的封装，它是一组接口，在设计模式中，Socket 其实就是一个门面（facade）模式，它把复杂的 TCP/IP 协议族隐藏在 Socket 接口后面，对用户来说，一组简单的接口就是全部，让 Socket 去组织数据，以符合指定的协议。
 
 下图展示了Socket在ISO模型里面大概位置：
+
 ![](http://ww1.sinaimg.cn/large/5f6e3e27ly1g372hly7xkj20f20d8js4.jpg)
 
 
@@ -16,6 +17,7 @@ Socket并不是一个协议，本质上说Socket是对 TCP/IP 协议的封装，
 [官方文档](https://www.php.net/manual/zh/book.sockets.php)里面列出了大概40个函数，但是常用的也就那几个，跟着文档，咱们一起来学学如何使用，首先声明一下，本人对Socket编程并不熟悉，如有错误的地方，希望大家指出来。
 
 咱们先看一幅图，关于TCP客户端和服务端之间的通信过程，它和咱们平时写http接口的时候差异很大，我们需要做更多的工作。
+
 ![](http://ww1.sinaimg.cn/large/5f6e3e27ly1g371bhib22j20da0dn0t2.jpg)
 
 
@@ -49,9 +51,11 @@ socket_close($sock);
 由于这里，咱还没有写客户端，所以暂时使用curl访问一下，运行效果如下：
 
 ===>服务端：
+
 ![](http://ww1.sinaimg.cn/large/5f6e3e27ly1g373ivwa2ej20ls06274r.jpg)
 
 ===>客户端：
+
 ![](http://ww1.sinaimg.cn/large/5f6e3e27ly1g373k4ahoij20hw03cwem.jpg)
 
 从这个例子里面我们可以看出来，curl发出是一个标准的http请求，实际上它的每一行后面是有\n的，在http协议里面，这几行文本其实是头（header）,但是在这个例子里面，对于我们来说，它就是一段文本而已，服务端只是把它的内容打印出来了,并没有去按照http协议去解析。虽然我们返回了```Hello World！\n```，但是这也并没有按照http协议的格式去做，缺少响应头。我只能说curl比较强大，如果使用浏览器访问的话会失败，提示```127.0.0.1 sent an invalid response```。
