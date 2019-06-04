@@ -4,7 +4,7 @@ namespace Chain;
 
 use Closure;
 
-interface Handler
+interface Middleware
 {
     public function execute(Closure $next);
 }

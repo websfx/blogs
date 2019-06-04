@@ -4,7 +4,7 @@ namespace Chain;
 
 use Closure;
 
-class LogHandler implements Handler
+class LogMiddleware implements Middleware
 {
     public function execute(Closure $next)
     {
